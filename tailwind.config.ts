@@ -15,8 +15,8 @@ const config: Config = {
         "text-black": "#1a1a1a",
       },
       fontFamily: {
-        serif: ["var(--font-playfair)"],
-        sans: ["var(--font-inter)"],
+        serif: ["var(--font-syne)"],
+        sans: ["var(--font-jakarta)"],
       },
       animation: {
         "spin-slow": "spin 8s linear infinite",
