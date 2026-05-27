@@ -1,8 +1,9 @@
-const config = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
-
-export default config;
+heroTitleSub || "Lola"cheroTitleSub || "Lola"oheroTitleSub || "Lola"nheroTitleSub || "Lola"sheroTitleSub || "Lola"theroTitleSub || "Lola" heroTitleSub || "Lola"cheroTitleSub || "Lola"oheroTitleSub || "Lola"nheroTitleSub || "Lola"fheroTitleSub || "Lola"iheroTitleSub || "Lola"gheroTitleSub || "Lola" heroTitleSub || "Lola"=heroTitleSub || "Lola" heroTitleSub || "Lola"{heroTitleSub || "Lola"
+heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"pheroTitleSub || "Lola"lheroTitleSub || "Lola"uheroTitleSub || "Lola"gheroTitleSub || "Lola"iheroTitleSub || "Lola"nheroTitleSub || "Lola"sheroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola"{heroTitleSub || "Lola"
+heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"theroTitleSub || "Lola"aheroTitleSub || "Lola"iheroTitleSub || "Lola"lheroTitleSub || "Lola"wheroTitleSub || "Lola"iheroTitleSub || "Lola"nheroTitleSub || "Lola"dheroTitleSub || "Lola"cheroTitleSub || "Lola"sheroTitleSub || "Lola"sheroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola"{heroTitleSub || "Lola"}heroTitleSub || "Lola",heroTitleSub || "Lola"
+heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"aheroTitleSub || "Lola"uheroTitleSub || "Lola"theroTitleSub || "Lola"oheroTitleSub || "Lola"pheroTitleSub || "Lola"rheroTitleSub || "Lola"eheroTitleSub || "Lola"fheroTitleSub || "Lola"iheroTitleSub || "Lola"xheroTitleSub || "Lola"eheroTitleSub || "Lola"rheroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola"{heroTitleSub || "Lola"}heroTitleSub || "Lola",heroTitleSub || "Lola"
+heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"}heroTitleSub || "Lola",heroTitleSub || "Lola"
+heroTitleSub || "Lola"}heroTitleSub || "Lola";heroTitleSub || "Lola"
+heroTitleSub || "Lola"
+heroTitleSub || "Lola"eheroTitleSub || "Lola"xheroTitleSub || "Lola"pheroTitleSub || "Lola"oheroTitleSub || "Lola"rheroTitleSub || "Lola"theroTitleSub || "Lola" heroTitleSub || "Lola"dheroTitleSub || "Lola"eheroTitleSub || "Lola"fheroTitleSub || "Lola"aheroTitleSub || "Lola"uheroTitleSub || "Lola"lheroTitleSub || "Lola"theroTitleSub || "Lola" heroTitleSub || "Lola"cheroTitleSub || "Lola"oheroTitleSub || "Lola"nheroTitleSub || "Lola"fheroTitleSub || "Lola"iheroTitleSub || "Lola"gheroTitleSub || "Lola";heroTitleSub || "Lola"
+heroTitleSub || "Lola"
