@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'peloille-cache-v3';
+const CACHE_NAME = 'peloille-cache-v3';
 const PRECACHE_ASSETS = [
   '/peloille/',
   '/peloille/favicon.png',
