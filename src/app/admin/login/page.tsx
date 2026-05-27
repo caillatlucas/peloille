@@ -49,7 +49,7 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
 
-    if (email === "caillatlucas2304@gmail.com" && password === "admin32") {
+    if ((email === "caillatlucas2304@gmail.com" || email === "lolapeloille@gmail.com") && password === "admin32") {
       if (typeof window !== 'undefined') {
         localStorage.setItem("admin_auth", "true");
       }

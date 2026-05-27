@@ -207,7 +207,7 @@ export default function AdminDashboard() {
           router.push("/admin/login");
           return;
         } 
-        if (session.user.email !== 'caillatlucas2304@gmail.com') {
+        if (session.user.email !== 'caillatlucas2304@gmail.com' && session.user.email !== 'lolapeloille@gmail.com') {
           router.push("/");
           return;
         }
@@ -1537,7 +1537,7 @@ export default function AdminDashboard() {
                                   Réponse
                                 </span>
                               )}
-                              {comment.user_email === 'caillatlucas2304@gmail.com' && (
+                              {['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(comment.user_email) && (
                                 <span className="bg-primary-red/20 text-primary-red text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border border-primary-red/20">
                                   Admin
                                 </span>

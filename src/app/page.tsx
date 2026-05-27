@@ -581,7 +581,7 @@ export default function Home() {
             avatar_url: compressedBase64, 
             full_name: user.email.split('@')[0] 
           });
-          if (user.email === 'caillatlucas2304@gmail.com') {
+          if (['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(user.email)) {
             setOwnerImage(compressedBase64);
           }
         }
@@ -1172,7 +1172,7 @@ export default function Home() {
         </motion.button>
         
         <div className="flex gap-4">
-          {user?.email === 'caillatlucas2304@gmail.com' && (
+          {['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(user?.email) && (
             <Link href="/admin">
               <motion.div
                 style={{ color: textColor, borderColor: textColor }}
@@ -1500,7 +1500,7 @@ export default function Home() {
                         const newUrl = e.target.value;
                         setUserProfileImage(newUrl);
                         await supabase.from('profiles').upsert({ id: user.id, avatar_url: newUrl, full_name: userPseudo });
-                        if (user.email === 'caillatlucas2304@gmail.com') {
+                        if (['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(user.email)) {
                           setOwnerImage(newUrl);
                         }
                       }}
@@ -1517,7 +1517,7 @@ export default function Home() {
                   </div>
 
                   {/* Owner site settings (Bio & Profession) */}
-                  {user.email === 'caillatlucas2304@gmail.com' && (
+                  {['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(user.email) && (
                     <div className="space-y-4 pt-4 border-t border-white/5">
                       <p className="text-[10px] font-bold uppercase tracking-widest text-primary-red">Paramètres du Site (Lola)</p>
                       
@@ -2157,7 +2157,7 @@ export default function Home() {
                       .filter(c => !c.parent_id && c.validated !== false && (!c.deleted_by_user || comments.some(r => r.parent_id === c.id && !r.deleted_by_user && r.validated !== false)))
                       .map((comment) => {
                         const isAuthor = user?.id === comment.user_id;
-                        const isAdmin = user?.email === 'caillatlucas2304@gmail.com';
+                        const isAdmin = ['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(user?.email);
                         const canDelete = isAuthor || isAdmin;
                         const dateFormatted = new Date(comment.created_at).toLocaleDateString("fr-FR", {
                           day: 'numeric',
@@ -2197,7 +2197,7 @@ export default function Home() {
                                       ) : (
                                         <>
                                           {comment.user_name}
-                                          {comment.user_email === 'caillatlucas2304@gmail.com' && (
+                                          {['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(comment.user_email) && (
                                             <span className="text-[8px] bg-primary-red/20 text-primary-red px-2 py-0.5 rounded-full border border-primary-red/20 font-bold uppercase tracking-widest">
                                               Admin
                                             </span>
@@ -2395,7 +2395,7 @@ export default function Home() {
                                           <div>
                                             <h5 className="text-xs font-bold text-white leading-none flex items-center gap-1.5">
                                               {reply.user_name}
-                                              {reply.user_email === 'caillatlucas2304@gmail.com' && (
+                                              {['caillatlucas2304@gmail.com', 'lolapeloille@gmail.com'].includes(reply.user_email) && (
                                                 <span className="text-[7px] bg-primary-red/20 text-primary-red px-1.5 py-0.5 rounded-full border border-primary-red/20 font-bold uppercase tracking-widest">
                                                   Admin
                                                 </span>
