@@ -200,7 +200,7 @@ export default function AdminDashboard() {
         fetchData();
         return;
       }
-
+      
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
@@ -220,7 +220,7 @@ export default function AdminDashboard() {
         }
         fetchData();
       } catch (err) {
-        console.error("Erreur serveur ou non configuré", err);
+        console.error("Erreur serveur auth", err);
         router.push("/admin/login");
       }
     };
@@ -258,142 +258,150 @@ export default function AdminDashboard() {
   const getYoutubeThumbnail = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 
   const fetchComments = async () => {
-    const { data: cData } = await supabase.from('comments').select('*').order('created_at', { ascending: false });
-    if (cData) {
-      const userIds = Array.from(new Set(cData.map((c: any) => c.user_id).filter(Boolean)));
-      if (userIds.length > 0) {
-        const { data: profData } = await supabase.from('profiles').select('id, avatar_url, full_name').in('id', userIds);
-        if (profData) {
-          const enriched = cData.map((c: any) => {
-            const p = profData.find(prof => prof.id === c.user_id);
-            return {
-              ...c,
-              user_name: p?.full_name || c.user_name,
-              avatar_url: p?.avatar_url || c.avatar_url
-            };
-          });
-          setComments(enriched);
-          return;
+    try {
+      const { data: cData } = await supabase.from('comments').select('*').order('created_at', { ascending: false });
+      if (cData) {
+        const userIds = Array.from(new Set(cData.map((c: any) => c.user_id).filter(Boolean)));
+        if (userIds.length > 0) {
+          const { data: profData } = await supabase.from('profiles').select('id, avatar_url, full_name').in('id', userIds);
+          if (profData) {
+            const enriched = cData.map((c: any) => {
+              const p = profData.find(prof => prof.id === c.user_id);
+              return {
+                ...c,
+                user_name: p?.full_name || c.user_name,
+                avatar_url: p?.avatar_url || c.avatar_url
+              };
+            });
+            setComments(enriched);
+            return;
+          }
         }
+        setComments(cData);
       }
-      setComments(cData);
+    } catch (err) {
+      console.warn("Fetch comments bypass:", err);
     }
   };
 
   const fetchData = async () => {
-    fetchComments();
-    const { data: pData } = await supabase.from('projects').select('*');
-    const { data: prodData } = await supabase.from('products').select('*');
-    const { data: msgData } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
-    const { data: sData } = await supabase.from('settings').select('*');
-    
-    if (msgData) {
-      setMessages(msgData);
-      const userIds = Array.from(new Set(msgData.map((m: any) => m.user_id).filter(Boolean)));
-      if (userIds.length > 0) {
-        const { data: profData } = await supabase.from('profiles').select('id, avatar_url, full_name').in('id', userIds);
-        if (profData) {
-          const enriched = msgData.map((m: any) => ({
-            ...m,
-            profiles: profData.find(p => p.id === m.user_id)
-          }));
-          setMessages(enriched);
-        }
-      }
-    }
-
-    const { data: allP } = await supabase.from('profiles').select('*');
-    if (allP) setAllProfiles(allP);
-
-    const { data: vData } = await supabase.rpc('get_all_site_visits');
-    if (vData) setVisits(vData);
-
-    if (sData) {
-      const global = sData.find(s => s.key === 'global')?.value;
-      if (global) {
-        if (pData && global.projectOrder) {
-          pData.sort((a, b) => {
-            const idxA = global.projectOrder.indexOf(a.id);
-            const idxB = global.projectOrder.indexOf(b.id);
-            if (idxA === -1 && idxB === -1) return 0;
-            if (idxA === -1) return 1;
-            if (idxB === -1) return -1;
-            return idxA - idxB;
-          });
-        }
-        if (prodData && global.productOrder) {
-          prodData.sort((a, b) => {
-            const idxA = global.productOrder.indexOf(a.id);
-            const idxB = global.productOrder.indexOf(b.id);
-            if (idxA === -1 && idxB === -1) return 0;
-            if (idxA === -1) return 1;
-            if (idxB === -1) return -1;
-            return idxA - idxB;
-          });
-        }
-        setProfileName(global.profileName || "Lola Peloille");
-        setProfileProfession(global.profileProfession || global.profession || "Artiste peintre");
-        setProfileBio(global.profileBio || global.bio || "");
-        setProfileImage(global.profileImage || "");
-        setHeroTitleMain(global.heroTitleMain || "PELOILLE");
-        setHeroTitleSub(global.heroTitleSub || "Lola");
-        setTextEffectImage(global.textEffectImage || "");
-        setMusicEnabled(global.musicEnabled || false);
-        setMusicUrl(global.musicUrl || "");
-        setMusicCover(global.musicCover || "");
-        setPrimaryColor(global.primaryColor || "#606c38");
-        setShow3DBackground(global.show3DBackground ?? false);
-        setMusicRotationEnabled(global.musicRotationEnabled ?? true);
-        setStatueTextureUrl(global.statueTextureUrl || "");
-        setStatueModelUrl(global.statueModelUrl || "");
-        setUseOriginalMaterial(global.useOriginalMaterial ?? false);
-        setRequireCommentValidation(global.requireCommentValidation ?? false);
-        if (global.sectionsConfig) {
-          const hasComments = global.sectionsConfig.some((s: any) => s.id === 'comments');
-          let migratedSections = global.sectionsConfig.map((s: { id: string; label: string; subLabel?: string; visible: boolean }) => {
-            if (s.id === 'projects' && s.subLabel === undefined) return { ...s, subLabel: global.projectsTitle || "Sélection 2024", label: global.recentProjectsTitle || "Postes" };
-            if (s.id === 'gallery' && s.subLabel === undefined) return { ...s, subLabel: "Galerie Photo/Vidéo", label: global.galleryTitle || s.label };
-            if (s.id === 'shop' && s.subLabel === undefined) return { ...s, subLabel: "Nos Produits" };
-            if (s.id === 'comments' && s.subLabel === undefined) return { ...s, subLabel: "Vos Retours" };
-            if (s.id === 'bento' && s.subLabel === undefined) return { ...s, subLabel: "Bento Grid", label: global.bentoGridTitle || s.label };
-            if (s.id === 'projects' && s.label === 'Projets') return { ...s, label: 'Postes' };
-            return s;
-          });
-          if (!hasComments) {
-            migratedSections.push({ id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true });
+    try {
+      fetchComments();
+      const { data: pData } = await supabase.from('projects').select('*');
+      const { data: prodData } = await supabase.from('products').select('*');
+      const { data: msgData } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
+      const { data: sData } = await supabase.from('settings').select('*');
+      
+      if (msgData) {
+        setMessages(msgData);
+        const userIds = Array.from(new Set(msgData.map((m: any) => m.user_id).filter(Boolean)));
+        if (userIds.length > 0) {
+          const { data: profData } = await supabase.from('profiles').select('id, avatar_url, full_name').in('id', userIds);
+          if (profData) {
+            const enriched = msgData.map((m: any) => ({
+              ...m,
+              profiles: profData.find(p => p.id === m.user_id)
+            }));
+            setMessages(enriched);
           }
-          setSectionsConfig(migratedSections);
-        } else {
-          setSectionsConfig([
-            { id: 'projects', label: 'Postes', subLabel: 'Sélection 2024', visible: true },
-            { id: 'shop', label: 'Boutique', subLabel: 'Nos Produits', visible: true },
-            { id: 'gallery', label: 'Galerie', subLabel: 'Galerie Photo/Vidéo', visible: true },
-            { id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true },
-            { id: 'bento', label: 'À propos', subLabel: 'Bento Grid', visible: true }
-          ]);
         }
       }
-      const soc = sData.find(s => s.key === 'socials')?.value;
-      if (soc) setSocials({ ...soc, customLinks: soc.customLinks || [] });
-    }
-    
-    if (pData) setProjects(pData);
-    if (prodData) setProducts(prodData);
 
-    const { data: mData } = await supabase.from('media').select('*');
-    if (mData) {
-      const global = sData?.find(s => s.key === 'global')?.value;
-      if (global?.mediaOrder) {
-        mData.sort((a, b) => {
-          const idxA = global.mediaOrder.indexOf(a.id);
-          const idxB = global.mediaOrder.indexOf(b.id);
-          if (idxA === -1 && idxB === -1) return 0;
-          if (idxA === -1) return 1;
-          if (idxB === -1) return -1;
-          return idxA - idxB;
-        });
+      const { data: allP } = await supabase.from('profiles').select('*');
+      if (allP) setAllProfiles(allP);
+
+      const { data: vData } = await supabase.rpc('get_all_site_visits');
+      if (vData) setVisits(vData);
+
+      if (sData) {
+        const global = sData.find(s => s.key === 'global')?.value;
+        if (global) {
+          if (pData && global.projectOrder) {
+            pData.sort((a, b) => {
+              const idxA = global.projectOrder.indexOf(a.id);
+              const idxB = global.projectOrder.indexOf(b.id);
+              if (idxA === -1 && idxB === -1) return 0;
+              if (idxA === -1) return 1;
+              if (idxB === -1) return -1;
+              return idxA - idxB;
+            });
+          }
+          if (prodData && global.productOrder) {
+            prodData.sort((a, b) => {
+              const idxA = global.productOrder.indexOf(a.id);
+              const idxB = global.productOrder.indexOf(b.id);
+              if (idxA === -1 && idxB === -1) return 0;
+              if (idxA === -1) return 1;
+              if (idxB === -1) return -1;
+              return idxA - idxB;
+            });
+          }
+          setProfileName(global.profileName || "Lola Peloille");
+          setProfileProfession(global.profileProfession || global.profession || "Artiste peintre");
+          setProfileBio(global.profileBio || global.bio || "");
+          setProfileImage(global.profileImage || "");
+          setHeroTitleMain(global.heroTitleMain || "PELOILLE");
+          setHeroTitleSub(global.heroTitleSub || "Lola");
+          setTextEffectImage(global.textEffectImage || "");
+          setMusicEnabled(global.musicEnabled || false);
+          setMusicUrl(global.musicUrl || "");
+          setMusicCover(global.musicCover || "");
+          setPrimaryColor(global.primaryColor || "#606c38");
+          setShow3DBackground(global.show3DBackground ?? false);
+          setMusicRotationEnabled(global.musicRotationEnabled ?? true);
+          setStatueTextureUrl(global.statueTextureUrl || "");
+          setStatueModelUrl(global.statueModelUrl || "");
+          setUseOriginalMaterial(global.useOriginalMaterial ?? false);
+          setRequireCommentValidation(global.requireCommentValidation ?? false);
+          if (global.sectionsConfig) {
+            const hasComments = global.sectionsConfig.some((s: any) => s.id === 'comments');
+            let migratedSections = global.sectionsConfig.map((s: { id: string; label: string; subLabel?: string; visible: boolean }) => {
+              if (s.id === 'projects' && s.subLabel === undefined) return { ...s, subLabel: global.projectsTitle || "Sélection 2024", label: global.recentProjectsTitle || "Postes" };
+              if (s.id === 'gallery' && s.subLabel === undefined) return { ...s, subLabel: "Galerie Photo/Vidéo", label: global.galleryTitle || s.label };
+              if (s.id === 'shop' && s.subLabel === undefined) return { ...s, subLabel: "Nos Produits" };
+              if (s.id === 'comments' && s.subLabel === undefined) return { ...s, subLabel: "Vos Retours" };
+              if (s.id === 'bento' && s.subLabel === undefined) return { ...s, subLabel: "Bento Grid", label: global.bentoGridTitle || s.label };
+              if (s.id === 'projects' && s.label === 'Projets') return { ...s, label: 'Postes' };
+              return s;
+            });
+            if (!hasComments) {
+              migratedSections.push({ id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true });
+            }
+            setSectionsConfig(migratedSections);
+          } else {
+            setSectionsConfig([
+              { id: 'projects', label: 'Postes', subLabel: 'Sélection 2024', visible: true },
+              { id: 'shop', label: 'Boutique', subLabel: 'Nos Produits', visible: true },
+              { id: 'gallery', label: 'Galerie', subLabel: 'Galerie Photo/Vidéo', visible: true },
+              { id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true },
+              { id: 'bento', label: 'À propos', subLabel: 'Bento Grid', visible: true }
+            ]);
+          }
+        }
+        const soc = sData.find(s => s.key === 'socials')?.value;
+        if (soc) setSocials({ ...soc, customLinks: soc.customLinks || [] });
       }
-      setMediaItems(mData);
+      
+      if (pData) setProjects(pData);
+      if (prodData) setProducts(prodData);
+
+      const { data: mData } = await supabase.from('media').select('*');
+      if (mData) {
+        const global = sData?.find(s => s.key === 'global')?.value;
+        if (global?.mediaOrder) {
+          mData.sort((a, b) => {
+            const idxA = global.mediaOrder.indexOf(a.id);
+            const idxB = global.mediaOrder.indexOf(b.id);
+            if (idxA === -1 && idxB === -1) return 0;
+            if (idxA === -1) return 1;
+            if (idxB === -1) return -1;
+            return idxA - idxB;
+          });
+        }
+        setMediaItems(mData);
+      }
+    } catch (err) {
+      console.warn("Fetch data bypass:", err);
     }
   };
 
