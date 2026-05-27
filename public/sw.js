@@ -1,10 +1,10 @@
-const CACHE_NAME = 'bentosite-cache-v3';
+const CACHE_NAME = 'peloille-cache-v3';
 const PRECACHE_ASSETS = [
-  '/bentosite/',
-  '/bentosite/favicon.png',
-  '/bentosite/icon-192x192.png',
-  '/bentosite/icon-512x512.png',
-  '/bentosite/models/model.glb'
+  '/peloille/',
+  '/peloille/favicon.png',
+  '/peloille/icon-192x192.png',
+  '/peloille/icon-512x512.png',
+  '/peloille/models/model.glb'
 ];
 
 self.addEventListener('install', (event) => {
@@ -49,7 +49,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          return caches.match(event.request) || caches.match('/bentosite/');
+          return caches.match(event.request) || caches.match('/peloille/');
         })
     );
     return;

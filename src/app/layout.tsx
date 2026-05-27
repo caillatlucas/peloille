@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   title: "PELOILLE.",
   description: "Portfolio de Lola Peloille - Artiste peintre",
   icons: {
-    icon: "/bentosite/favicon.png",
-    shortcut: "/bentosite/favicon.ico",
+    icon: "/peloille/favicon.png",
+    shortcut: "/peloille/favicon.ico",
   },
 };
 
@@ -32,17 +32,17 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/bentosite/favicon.png?v=2" />
-        <link rel="shortcut icon" href="/bentosite/favicon.ico?v=2" />
-        <link rel="manifest" href="/bentosite/manifest.json" />
+        <link rel="icon" type="image/png" href="/peloille/favicon.png?v=2" />
+        <link rel="shortcut icon" href="/peloille/favicon.ico?v=2" />
+        <link rel="manifest" href="/peloille/manifest.json" />
         <meta name="theme-color" content="#0d0d0d" />
-        <link rel="apple-touch-icon" href="/bentosite/icon-192x192.png" />
+        <link rel="apple-touch-icon" href="/peloille/icon-192x192.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/bentosite/sw.js').then(
+                  navigator.serviceWorker.register('/peloille/sw.js').then(
                     function(registration) {
                       console.log('PWA Service Worker registered with scope: ', registration.scope);
                     },

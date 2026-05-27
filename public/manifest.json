@@ -2,20 +2,20 @@
   "name": "PELOILLE.",
   "short_name": "PELOILLE.",
   "description": "Portfolio de Lola Peloille - Artiste peintre & Design 3D",
-  "start_url": "/bentosite/",
+  "start_url": "/peloille/",
   "display": "standalone",
   "background_color": "#0d0d0d",
   "theme_color": "#0d0d0d",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/bentosite/icon-192x192.png",
+      "src": "/peloille/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/bentosite/icon-512x512.png",
+      "src": "/peloille/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
