@@ -104,14 +104,14 @@ const getYoutubeId = (url: string) => {
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
   const [settings, setSettings] = useState({ 
-    profession: "Freelance informatique", 
+    profession: "Artiste peintre", 
     bio: "", 
     email: "", 
     projectsTitle: "Sélection 2024", 
     recentProjectsTitle: "Projets Récents",
     galleryTitle: "Galerie", 
     bentoGridTitle: "Bento Grid",
-    heroTitleMain: "CAILLAT", 
+    heroTitleMain: "PELOILLE", 
     heroTitleSub: "Lucas", 
     textEffectImage: "",
     musicEnabled: false, 
@@ -385,7 +385,7 @@ export default function Home() {
           ...prev, 
           ...global,
           bio: global.profileBio ?? global.bio ?? "",
-          profession: global.profileProfession ?? global.profession ?? "Freelance informatique"
+          profession: global.profileProfession ?? global.profession ?? "Artiste peintre"
         }));
       }
       
@@ -849,7 +849,7 @@ export default function Home() {
     reader.readAsDataURL(file);
   };
 
-  const copyEmail = () => { navigator.clipboard.writeText(settings.email || "contact@lucascaillat.fr"); setCopied(true); setTimeout(() => setCopied(false), 2000); };
+  const copyEmail = () => { navigator.clipboard.writeText(settings.email || "contact@lucasPELOILLE.fr"); setCopied(true); setTimeout(() => setCopied(false), 2000); };
 
   const getYoutubeThumbnail = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
   const formatTime = (secs: number) => {
@@ -1042,7 +1042,12 @@ export default function Home() {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('admin_auth');
+    }
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {}
     setUser(null);
   };
 
@@ -1688,8 +1693,8 @@ export default function Home() {
                     <h4 className="text-sm font-bold text-white truncate font-sans" title={songTitle || settings.heroTitleMain || "BENTO TRACK"}>
                       {songTitle || settings.heroTitleMain || "BENTO TRACK"}
                     </h4>
-                    <p className="text-xs text-white/50 truncate font-sans" title={songArtist || settings.heroTitleSub || "Lucas Caillat"}>
-                      {songArtist || settings.heroTitleSub || "Lucas Caillat"}
+                    <p className="text-xs text-white/50 truncate font-sans" title={songArtist || settings.heroTitleSub || "Lola Peloille"}>
+                      {songArtist || settings.heroTitleSub || "Lola Peloille"}
                     </p>
                   </div>
                 </div>
@@ -2475,7 +2480,7 @@ export default function Home() {
                 <div className="aspect-square bg-black/20 backdrop-blur-md border border-white/20 rounded-2xl p-10 flex flex-col justify-between text-white relative overflow-hidden group shadow-2xl hover:bg-black/30 transition-all">
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Contact</p>
                   <div className="space-y-4 relative z-10">
-                    <p className="font-serif text-2xl truncate">{settings.email || "hello@lucascaillat.fr"}</p>
+                    <p className="font-serif text-2xl truncate">{settings.email || "hello@lucasPELOILLE.fr"}</p>
                     <button onClick={copyEmail} className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary-green transition-colors"> {copied ? <><Check size={14} /> Copié</> : <><Copy size={14} /> Copier l'email</>} </button>
                   </div>
                 </div>
@@ -2490,7 +2495,7 @@ export default function Home() {
           <div className="max-w-md text-center md:text-left relative">
             <motion.h3 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="font-serif text-3xl md:text-4xl text-soft-black mb-6">Discutons de votre projet.</motion.h3>
             <div className="relative inline-block">
-              <button onClick={copyEmail} className="group flex items-center gap-3 text-lg md:text-xl border-b border-primary-green text-text-black hover:text-primary-green transition-all pb-1 font-medium"> {settings.email || "contact@lucascaillat.fr"} <Copy size={16} className="opacity-0 group-hover:opacity-40 transition-opacity" /> </button>
+              <button onClick={copyEmail} className="group flex items-center gap-3 text-lg md:text-xl border-b border-primary-green text-text-black hover:text-primary-green transition-all pb-1 font-medium"> {settings.email || "contact@lucasPELOILLE.fr"} <Copy size={16} className="opacity-0 group-hover:opacity-40 transition-opacity" /> </button>
               <AnimatePresence> {copied && <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: -10 }} exit={{ opacity: 0, y: 0 }} className="absolute -top-12 left-0 bg-text-black text-white px-4 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 shadow-xl"><Check size={12} className="text-green-500" /> Email Copié !</motion.div>} </AnimatePresence>
             </div>
           </div>

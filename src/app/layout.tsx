@@ -13,8 +13,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CAILLAT.",
-  description: "Portfolio de Lucas Caillat - Freelance Informatique",
+  title: "PELOILLE.",
+  description: "Portfolio de Lola Peloille - Artiste peintre",
   icons: {
     icon: "/peloille/favicon.png",
     shortcut: "/peloille/favicon.ico",

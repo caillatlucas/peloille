@@ -92,11 +92,11 @@ export const ICON_MAP: Record<string, any> = {
 };
 
 const defaultSocials: SocialConfig = {
-  email: "contact@lucascaillat.fr",
-  linkedin: { url: "https://linkedin.com/in/lucascaillat", enabled: true },
-  github: { url: "https://github.com/lucascaillat", enabled: true },
-  twitter: { url: "https://twitter.com/lucascaillat", enabled: false },
-  instagram: { url: "https://instagram.com/lucascaillat", enabled: false },
+  email: "contact@lucasPELOILLE.fr",
+  linkedin: { url: "https://linkedin.com/in/lucasPELOILLE", enabled: true },
+  github: { url: "https://github.com/lucasPELOILLE", enabled: true },
+  twitter: { url: "https://twitter.com/lucasPELOILLE", enabled: false },
+  instagram: { url: "https://instagram.com/lucasPELOILLE", enabled: false },
   youtube: { url: "", enabled: false },
   tiktok: { url: "", enabled: false },
   discord: { url: "", enabled: false },

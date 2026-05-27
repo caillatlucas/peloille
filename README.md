@@ -1,4 +1,4 @@
-# Portfolio Lucas Caillat
+# Portfolio Lola Peloille
 
 Portfolio web premium, minimaliste et élégant, reprenant l'identité visuelle de la carte de visite.
 
