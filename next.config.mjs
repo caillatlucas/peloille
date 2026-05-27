@@ -1,13 +1,11 @@
-heroTitleSub || "Lola"/heroTitleSub || "Lola"*heroTitleSub || "Lola"*heroTitleSub || "Lola" heroTitleSub || "Lola"@heroTitleSub || "Lola"theroTitleSub || "Lola"yheroTitleSub || "Lola"pheroTitleSub || "Lola"eheroTitleSub || "Lola" heroTitleSub || "Lola"{heroTitleSub || "Lola"iheroTitleSub || "Lola"mheroTitleSub || "Lola"pheroTitleSub || "Lola"oheroTitleSub || "Lola"rheroTitleSub || "Lola"theroTitleSub || "Lola"(heroTitleSub || "Lola"'heroTitleSub || "Lola"nheroTitleSub || "Lola"eheroTitleSub || "Lola"xheroTitleSub || "Lola"theroTitleSub || "Lola"'heroTitleSub || "Lola")heroTitleSub || "Lola".heroTitleSub || "Lola"NheroTitleSub || "Lola"eheroTitleSub || "Lola"xheroTitleSub || "Lola"theroTitleSub || "Lola"CheroTitleSub || "Lola"oheroTitleSub || "Lola"nheroTitleSub || "Lola"fheroTitleSub || "Lola"iheroTitleSub || "Lola"gheroTitleSub || "Lola"}heroTitleSub || "Lola" heroTitleSub || "Lola"*heroTitleSub || "Lola"/heroTitleSub || "Lola"
-heroTitleSub || "Lola"cheroTitleSub || "Lola"oheroTitleSub || "Lola"nheroTitleSub || "Lola"sheroTitleSub || "Lola"theroTitleSub || "Lola" heroTitleSub || "Lola"nheroTitleSub || "Lola"eheroTitleSub || "Lola"xheroTitleSub || "Lola"theroTitleSub || "Lola"CheroTitleSub || "Lola"oheroTitleSub || "Lola"nheroTitleSub || "Lola"fheroTitleSub || "Lola"iheroTitleSub || "Lola"gheroTitleSub || "Lola" heroTitleSub || "Lola"=heroTitleSub || "Lola" heroTitleSub || "Lola"{heroTitleSub || "Lola"
-heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"oheroTitleSub || "Lola"uheroTitleSub || "Lola"theroTitleSub || "Lola"pheroTitleSub || "Lola"uheroTitleSub || "Lola"theroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola""heroTitleSub || "Lola"eheroTitleSub || "Lola"xheroTitleSub || "Lola"pheroTitleSub || "Lola"oheroTitleSub || "Lola"rheroTitleSub || "Lola"theroTitleSub || "Lola""heroTitleSub || "Lola",heroTitleSub || "Lola"
-heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"iheroTitleSub || "Lola"mheroTitleSub || "Lola"aheroTitleSub || "Lola"gheroTitleSub || "Lola"eheroTitleSub || "Lola"sheroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola"{heroTitleSub || "Lola"
-heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"uheroTitleSub || "Lola"nheroTitleSub || "Lola"oheroTitleSub || "Lola"pheroTitleSub || "Lola"theroTitleSub || "Lola"iheroTitleSub || "Lola"mheroTitleSub || "Lola"iheroTitleSub || "Lola"zheroTitleSub || "Lola"eheroTitleSub || "Lola"dheroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola"theroTitleSub || "Lola"rheroTitleSub || "Lola"uheroTitleSub || "Lola"eheroTitleSub || "Lola",heroTitleSub || "Lola"
-heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"}heroTitleSub || "Lola",heroTitleSub || "Lola"
-heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"bheroTitleSub || "Lola"aheroTitleSub || "Lola"sheroTitleSub || "Lola"eheroTitleSub || "Lola"PheroTitleSub || "Lola"aheroTitleSub || "Lola"theroTitleSub || "Lola"hheroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola"'heroTitleSub || "Lola"/heroTitleSub || "Lola"pheroTitleSub || "Lola"eheroTitleSub || "Lola"lheroTitleSub || "Lola"oheroTitleSub || "Lola"iheroTitleSub || "Lola"lheroTitleSub || "Lola"lheroTitleSub || "Lola"eheroTitleSub || "Lola"'heroTitleSub || "Lola",heroTitleSub || "Lola"
-heroTitleSub || "Lola" heroTitleSub || "Lola" heroTitleSub || "Lola"theroTitleSub || "Lola"rheroTitleSub || "Lola"aheroTitleSub || "Lola"iheroTitleSub || "Lola"lheroTitleSub || "Lola"iheroTitleSub || "Lola"nheroTitleSub || "Lola"gheroTitleSub || "Lola"SheroTitleSub || "Lola"lheroTitleSub || "Lola"aheroTitleSub || "Lola"sheroTitleSub || "Lola"hheroTitleSub || "Lola":heroTitleSub || "Lola" heroTitleSub || "Lola"theroTitleSub || "Lola"rheroTitleSub || "Lola"uheroTitleSub || "Lola"eheroTitleSub || "Lola",heroTitleSub || "Lola"
-heroTitleSub || "Lola"}heroTitleSub || "Lola";heroTitleSub || "Lola"
-heroTitleSub || "Lola"
-heroTitleSub || "Lola"eheroTitleSub || "Lola"xheroTitleSub || "Lola"pheroTitleSub || "Lola"oheroTitleSub || "Lola"rheroTitleSub || "Lola"theroTitleSub || "Lola" heroTitleSub || "Lola"dheroTitleSub || "Lola"eheroTitleSub || "Lola"fheroTitleSub || "Lola"aheroTitleSub || "Lola"uheroTitleSub || "Lola"lheroTitleSub || "Lola"theroTitleSub || "Lola" heroTitleSub || "Lola"nheroTitleSub || "Lola"eheroTitleSub || "Lola"xheroTitleSub || "Lola"theroTitleSub || "Lola"CheroTitleSub || "Lola"oheroTitleSub || "Lola"nheroTitleSub || "Lola"fheroTitleSub || "Lola"iheroTitleSub || "Lola"gheroTitleSub || "Lola";heroTitleSub || "Lola"
-heroTitleSub || "Lola"heroTitleSub || "Lola"
-heroTitleSub || "Lola"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "export",
+  images: {
+    unoptimized: true,
+  },
+  basePath: '/bentosite',
+  trailingSlash: true,
+};
+
+export default nextConfig;

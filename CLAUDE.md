@@ -1,2 +1,1 @@
-heroTitleSub || "Lola"@heroTitleSub || "Lola"AheroTitleSub || "Lola"GheroTitleSub || "Lola"EheroTitleSub || "Lola"NheroTitleSub || "Lola"TheroTitleSub || "Lola"SheroTitleSub || "Lola".heroTitleSub || "Lola"mheroTitleSub || "Lola"dheroTitleSub || "Lola"
-heroTitleSub || "Lola"
+@AGENTS.md
