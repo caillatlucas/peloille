@@ -298,7 +298,7 @@ function ProjectContent() {
                    href={project.url} 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   className="block w-full text-center bg-primary-red text-white py-5 rounded-2xl hover:bg-red-600 transition-all font-bold text-xs tracking-widest uppercase shadow-2xl shadow-primary-red/30"
+                   className="block w-full text-center bg-primary-red text-white py-5 rounded-2xl hover:bg-primary-green transition-all font-bold text-xs tracking-widest uppercase shadow-2xl shadow-primary-red/30"
                  >
                     Voir le site live
                  </a>

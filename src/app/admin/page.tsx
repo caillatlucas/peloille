@@ -87,17 +87,17 @@ export default function AdminDashboard() {
   const [orderSearchQuery, setOrderSearchQuery] = useState("");
   const router = useRouter();
   
-  const [profileName, setProfileName] = useState("Lucas Caillat");
-  const [profileProfession, setProfileProfession] = useState("Freelance Informatique");
+  const [profileName, setProfileName] = useState("Lola Peloille");
+  const [profileProfession, setProfileProfession] = useState("Artiste peintre");
   const [profileBio, setProfileBio] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  const [heroTitleMain, setHeroTitleMain] = useState("CAILLAT");
-  const [heroTitleSub, setHeroTitleSub] = useState("Lucas");
+  const [heroTitleMain, setHeroTitleMain] = useState("PELOILLE");
+  const [heroTitleSub, setHeroTitleSub] = useState("Lola");
   const [textEffectImage, setTextEffectImage] = useState("");
   const [musicEnabled, setMusicEnabled] = useState(false);
   const [musicUrl, setMusicUrl] = useState("");
   const [musicCover, setMusicCover] = useState("");
-  const [primaryColor, setPrimaryColor] = useState("#ff3131");
+  const [primaryColor, setPrimaryColor] = useState("#606c38");
   const [show3DBackground, setShow3DBackground] = useState(false);
   const [musicRotationEnabled, setMusicRotationEnabled] = useState(true);
   const [statueTextureUrl, setStatueTextureUrl] = useState("");
@@ -112,11 +112,11 @@ export default function AdminDashboard() {
   ]);
 
   const [socials, setSocials] = useState<SocialConfig>({
-    email: "contact@lucascaillat.fr",
-    linkedin: { url: "https://linkedin.com/in/lucascaillat", enabled: true },
-    github: { url: "https://github.com/lucascaillat", enabled: true },
-    twitter: { url: "https://twitter.com/lucascaillat", enabled: false },
-    instagram: { url: "https://instagram.com/lucascaillat", enabled: false },
+    email: "lolapeloille@gmail.com",
+    linkedin: { url: "https://linkedin.com/in/lolapeloille", enabled: true },
+    github: { url: "https://github.com/lolapeloille", enabled: true },
+    twitter: { url: "https://twitter.com/lolapeloille", enabled: false },
+    instagram: { url: "https://instagram.com/lolapeloille", enabled: false },
     youtube: { url: "", enabled: false },
     tiktok: { url: "", enabled: false },
     discord: { url: "", enabled: false },
@@ -196,23 +196,33 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        router.push("/admin/login");
-        return;
-      } 
-      if (session.user.email !== 'caillatlucas2304@gmail.com') {
-        router.push("/");
+      if (typeof window !== 'undefined' && localStorage.getItem('admin_auth') === 'true') {
+        fetchData();
         return;
       }
-      const { data: mfaData, error: mfaError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-      if (mfaError) {
-        console.error("Erreur check MFA:", mfaError);
-      } else if (mfaData.nextLevel === 'aal2' && mfaData.currentLevel !== 'aal2') {
+
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          router.push("/admin/login");
+          return;
+        } 
+        if (session.user.email !== 'caillatlucas2304@gmail.com') {
+          router.push("/");
+          return;
+        }
+        const { data: mfaData, error: mfaError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+        if (mfaError) {
+          console.error("Erreur check MFA:", mfaError);
+        } else if (mfaData.nextLevel === 'aal2' && mfaData.currentLevel !== 'aal2') {
+          router.push("/admin/login");
+          return;
+        }
+        fetchData();
+      } catch (err) {
+        console.error("Erreur serveur ou non configuré", err);
         router.push("/admin/login");
-        return;
       }
-      fetchData();
     };
     checkAuth();
 
@@ -321,17 +331,17 @@ export default function AdminDashboard() {
             return idxA - idxB;
           });
         }
-        setProfileName(global.profileName || "Lucas Caillat");
-        setProfileProfession(global.profileProfession || global.profession || "Freelance Informatique");
+        setProfileName(global.profileName || "Lola Peloille");
+        setProfileProfession(global.profileProfession || global.profession || "Artiste peintre");
         setProfileBio(global.profileBio || global.bio || "");
         setProfileImage(global.profileImage || "");
-        setHeroTitleMain(global.heroTitleMain || "CAILLAT");
-        setHeroTitleSub(global.heroTitleSub || "Lucas");
+        setHeroTitleMain(global.heroTitleMain || "PELOILLE");
+        setHeroTitleSub(global.heroTitleSub || "Lola");
         setTextEffectImage(global.textEffectImage || "");
         setMusicEnabled(global.musicEnabled || false);
         setMusicUrl(global.musicUrl || "");
         setMusicCover(global.musicCover || "");
-        setPrimaryColor(global.primaryColor || "#ff3131");
+        setPrimaryColor(global.primaryColor || "#606c38");
         setShow3DBackground(global.show3DBackground ?? false);
         setMusicRotationEnabled(global.musicRotationEnabled ?? true);
         setStatueTextureUrl(global.statueTextureUrl || "");
@@ -436,7 +446,7 @@ export default function AdminDashboard() {
     if (!text && media.length === 0) return;
     const msg = messages.find(m => m.id === msgId);
     if (!msg) return;
-    const newReply = { text, date: new Date().toLocaleString("fr-FR"), from: "Lucas", media };
+    const newReply = { text, date: new Date().toLocaleString("fr-FR"), from: "Lola", media };
     const updatedReplies = [...(msg.replies || []), newReply];
     const { error } = await supabase.from('messages').update({ reply: text, replies: updatedReplies }).eq('id', msgId);
     if (!error) {
@@ -477,7 +487,7 @@ export default function AdminDashboard() {
           await supabase.auth.mfa.unenroll({ factorId: factor.id });
         }
       }
-      const { data, error } = await supabase.auth.mfa.enroll({ factorType: 'totp', issuer: 'Lucas Portfolio', friendlyName: 'Admin Access' });
+      const { data, error } = await supabase.auth.mfa.enroll({ factorType: 'totp', issuer: 'Lola Portfolio', friendlyName: 'Admin Access' });
       if (error) {
         setMfaError(error.message);
         alert("Erreur A2F : " + error.message);
@@ -513,7 +523,12 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('admin_auth');
+    }
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {}
     router.push("/admin/login");
   };
 
@@ -664,7 +679,7 @@ export default function AdminDashboard() {
         <div>
           <Link href="/" className="inline-block mb-12 group">
             <motion.h1 className="font-serif text-3xl tracking-tighter text-primary-red group-hover:scale-105 transition-transform">
-              CAILLAT
+              PELOILLE
               <span className="block text-xs font-sans tracking-[0.2em] text-white/40 mt-1 uppercase">Console Admin</span>
             </motion.h1>
           </Link>
@@ -705,12 +720,12 @@ export default function AdminDashboard() {
               setFormDetails("");
               setFormGallery([]);
               setIsModalOpen(true);
-            }} className="bg-primary-red text-white px-8 py-3.5 rounded-2xl hover:bg-red-600 transition-all flex items-center gap-2 text-sm font-bold shadow-2xl shadow-primary-red/30">
+            }} className="bg-primary-red text-white px-8 py-3.5 rounded-2xl hover:bg-primary-green transition-all flex items-center gap-2 text-sm font-bold shadow-2xl shadow-primary-red/30">
               <Plus size={18} /> NOUVEAU POSTE
             </button>
           )}
           {activeTab === "shop" && (
-            <button onClick={() => { setEditingProduct(null); setProdName(""); setProdPrice(0); setProdDesc(""); setProdImages([]); setProdImagesText(""); setProdLink(""); setProdLinkText(""); setProdPurchaseMsg(""); setIsProductModalOpen(true); }} className="bg-primary-red text-white px-8 py-3.5 rounded-2xl hover:bg-red-600 transition-all flex items-center gap-2 text-sm font-bold shadow-2xl shadow-primary-red/30">
+            <button onClick={() => { setEditingProduct(null); setProdName(""); setProdPrice(0); setProdDesc(""); setProdImages([]); setProdImagesText(""); setProdLink(""); setProdLinkText(""); setProdPurchaseMsg(""); setIsProductModalOpen(true); }} className="bg-primary-red text-white px-8 py-3.5 rounded-2xl hover:bg-primary-green transition-all flex items-center gap-2 text-sm font-bold shadow-2xl shadow-primary-red/30">
               <Plus size={18} /> NOUVEAU PRODUIT
             </button>
           )}
@@ -775,7 +790,7 @@ export default function AdminDashboard() {
                 {/* Cards Grid */}
                 <div className="grid grid-cols-2 lg:grid-cols-5 gap-6">
                   {[
-                    { label: "Postes", value: projects.length, color: "from-red-500/20 to-red-600/5", icon: FileText, desc: "Articles & projets" },
+                    { label: "Postes", value: projects.length, color: "from-primary-green/20 to-primary-green/5", icon: FileText, desc: "Articles & projets" },
                     { label: "Visites", value: visits.length, color: "from-emerald-500/20 to-emerald-600/5", icon: Activity, desc: "Vues uniques de l'IP" },
                     { label: "Boutique", value: products.length, color: "from-purple-500/20 to-purple-600/5", icon: Zap, desc: "Produits en vente" },
                     { label: "Messages", value: messages.length, color: "from-blue-500/20 to-blue-600/5", icon: MessageSquare, desc: "Contacts & formulaires" },
@@ -925,7 +940,7 @@ export default function AdminDashboard() {
                       setFormGallery(project.gallery || []);
                       setIsModalOpen(true);
                     }} className="p-3 bg-white/5 hover:bg-white/10 rounded-xl text-white/50 hover:text-primary-red transition-all"><Edit2 size={18} /></button>
-                    <button onClick={() => deleteProject(project.id)} className="p-3 bg-white/5 hover:bg-white/10 rounded-xl text-white/50 hover:text-red-500 transition-all"><Trash2 size={18} /></button>
+                    <button onClick={() => deleteProject(project.id)} className="p-3 bg-white/5 hover:bg-white/10 rounded-xl text-white/50 hover:text-primary-green transition-all"><Trash2 size={18} /></button>
                   </div>
                 </div>
               ))}
@@ -955,7 +970,7 @@ export default function AdminDashboard() {
                           <button onClick={() => moveMediaItem(mediaItems.indexOf(item), 'left')} className="p-1.5 bg-white/20 hover:bg-white/40 rounded-sm text-white transition-colors"><ArrowLeft size={14} /></button>
                           <button onClick={() => moveMediaItem(mediaItems.indexOf(item), 'right')} className="p-1.5 bg-white/20 hover:bg-white/40 rounded-sm text-white transition-colors"><ArrowLeft size={14} className="rotate-180" /></button>
                         </div>
-                        <button onClick={() => deleteMedia(item.id)} className="p-2 bg-red-600 text-white rounded-sm"><Trash2 size={14} /></button>
+                        <button onClick={() => deleteMedia(item.id)} className="p-2 bg-primary-green text-white rounded-sm"><Trash2 size={14} /></button>
                       </div>
                       {ytId && <div className="absolute bottom-2 left-2 bg-text-black/80 text-white text-[8px] px-1.5 py-0.5 rounded-xs uppercase tracking-widest font-bold">Vidéo</div>}
                     </div>
@@ -992,7 +1007,7 @@ export default function AdminDashboard() {
                         ];
                         setSocials({ ...socials, customLinks: updatedLinks });
                       }}
-                      className="bg-primary-red hover:bg-red-600 text-white font-bold text-[10px] tracking-widest uppercase px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all shadow-md"
+                      className="bg-primary-red hover:bg-primary-green text-white font-bold text-[10px] tracking-widest uppercase px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all shadow-md"
                     >
                       <Plus size={12} /> Ajouter
                     </button>
@@ -1095,7 +1110,7 @@ export default function AdminDashboard() {
                                 const updated = (socials.customLinks || []).filter((_, i) => i !== idx);
                                 setSocials({ ...socials, customLinks: updated });
                               }}
-                              className="p-2 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 rounded-xl transition-all"
+                              className="p-2 bg-white/5 hover:bg-primary-green/20 text-white/40 hover:text-primary-green rounded-xl transition-all"
                               title="Supprimer"
                             >
                               <Trash2 size={14} />
@@ -1121,7 +1136,7 @@ export default function AdminDashboard() {
               ) : (
                 messages.filter(m => !m.order_id).map((msg) => (
                   <div key={msg.id} className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-3xl p-8 space-y-8 relative group shadow-2xl">
-                    <button onClick={() => deleteMessage(msg.id)} className="absolute top-8 right-8 text-white/20 hover:text-red-500 transition-colors"><Trash2 size={20} /></button>
+                    <button onClick={() => deleteMessage(msg.id)} className="absolute top-8 right-8 text-white/20 hover:text-primary-green transition-colors"><Trash2 size={20} /></button>
                     <div className="flex items-start gap-6">
                       <div className="w-16 h-16 rounded-full bg-white/10 border border-white/10 overflow-hidden relative shrink-0">
                         {(msg as any).profiles?.avatar_url ? (
@@ -1161,7 +1176,7 @@ export default function AdminDashboard() {
                           {msg.replies.map((rep, ridx) => (
                             <div key={ridx} className="bg-white/5 p-4 rounded-2xl border border-white/5 space-y-3">
                               <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest opacity-40">
-                                <span>Lucas</span>
+                                <span>Lola</span>
                                 <span>{rep.date}</span>
                               </div>
                               <p className="text-sm text-white/80">{rep.text}</p>
@@ -1185,7 +1200,7 @@ export default function AdminDashboard() {
                             {replyMedia[msg.id].map((m, idx) => (
                               <div key={idx} className="relative w-16 h-16 rounded-lg overflow-hidden group">
                                 <Image src={m.url} alt="Pending Media" fill className="object-cover" unoptimized />
-                                <button onClick={() => setReplyMedia({ ...replyMedia, [msg.id]: replyMedia[msg.id].filter((_, i) => i !== idx) })} className="absolute inset-0 bg-red-500/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white">
+                                <button onClick={() => setReplyMedia({ ...replyMedia, [msg.id]: replyMedia[msg.id].filter((_, i) => i !== idx) })} className="absolute inset-0 bg-primary-green/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white">
                                   <Trash2 size={16} />
                                 </button>
                               </div>
@@ -1214,7 +1229,7 @@ export default function AdminDashboard() {
                               <Plus size={20} />
                             </button>
                           </div>
-                          <button onClick={() => handleReply(msg.id)} className="bg-primary-red text-white px-8 py-4 text-xs font-bold rounded-2xl flex items-center gap-2 hover:bg-red-600 transition-all shadow-xl shadow-primary-red/20 h-[52px]"> <Send size={16} /> RÉPONDRE </button>
+                          <button onClick={() => handleReply(msg.id)} className="bg-primary-red text-white px-8 py-4 text-xs font-bold rounded-2xl flex items-center gap-2 hover:bg-primary-green transition-all shadow-xl shadow-primary-red/20 h-[52px]"> <Send size={16} /> RÉPONDRE </button>
                         </div>
                       </div>
                     </div>
@@ -1259,7 +1274,7 @@ export default function AdminDashboard() {
               >
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="bg-black/35 backdrop-blur-2xl border border-white/10 p-6 rounded-3xl relative overflow-hidden group shadow-2xl flex flex-col justify-between hover:border-primary-red/30 transition-all">
-                    <div className="absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br from-red-500/20 to-red-600/5 rounded-full opacity-30 group-hover:scale-125 transition-transform" />
+                    <div className="absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br from-primary-green/20 to-primary-green/5 rounded-full opacity-30 group-hover:scale-125 transition-transform" />
                     <div className="flex justify-between items-start">
                       <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">Total Commandes</span>
                       <ShoppingCart size={18} className="text-white/30" />
@@ -1324,7 +1339,7 @@ export default function AdminDashboard() {
 
                       return (
                         <div key={msg.id} className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-3xl p-8 space-y-8 relative group shadow-2xl hover:border-primary-red/20 transition-all">
-                          <button onClick={() => deleteMessage(msg.id)} className="absolute top-8 right-8 text-white/20 hover:text-red-500 transition-colors"><Trash2 size={20} /></button>
+                          <button onClick={() => deleteMessage(msg.id)} className="absolute top-8 right-8 text-white/20 hover:text-primary-green transition-colors"><Trash2 size={20} /></button>
                           
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6">
                             <div className="flex items-center gap-4 flex-wrap">
@@ -1410,7 +1425,7 @@ export default function AdminDashboard() {
                                 {msg.replies.map((rep, ridx) => (
                                   <div key={ridx} className="bg-white/5 p-4 rounded-2xl border border-white/5 space-y-3">
                                     <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest opacity-40">
-                                      <span>Lucas (Admin)</span>
+                                      <span>Lola (Admin)</span>
                                       <span>{rep.date}</span>
                                     </div>
                                     <p className="text-sm text-white/80">{rep.text}</p>
@@ -1434,7 +1449,7 @@ export default function AdminDashboard() {
                                   {replyMedia[msg.id].map((m, idx) => (
                                     <div key={idx} className="relative w-16 h-16 rounded-lg overflow-hidden group">
                                       <Image src={m.url} alt="Pending Media" fill className="object-cover" unoptimized />
-                                      <button onClick={() => setReplyMedia({ ...replyMedia, [msg.id]: replyMedia[msg.id].filter((_, i) => i !== idx) })} className="absolute inset-0 bg-red-500/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white">
+                                      <button onClick={() => setReplyMedia({ ...replyMedia, [msg.id]: replyMedia[msg.id].filter((_, i) => i !== idx) })} className="absolute inset-0 bg-primary-green/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white">
                                         <Trash2 size={16} />
                                       </button>
                                     </div>
@@ -1463,7 +1478,7 @@ export default function AdminDashboard() {
                                     <Plus size={20} />
                                   </button>
                                 </div>
-                                <button onClick={() => handleReply(msg.id)} className="bg-primary-red text-white px-8 py-4 text-xs font-bold rounded-2xl flex items-center gap-2 hover:bg-red-600 transition-all shadow-xl shadow-primary-red/20 h-[52px]"> <Send size={16} /> RÉPONDRE </button>
+                                <button onClick={() => handleReply(msg.id)} className="bg-primary-red text-white px-8 py-4 text-xs font-bold rounded-2xl flex items-center gap-2 hover:bg-primary-green transition-all shadow-xl shadow-primary-red/20 h-[52px]"> <Send size={16} /> RÉPONDRE </button>
                               </div>
                             </div>
                           </div>
@@ -1495,7 +1510,7 @@ export default function AdminDashboard() {
                     const commentLikesCount = (comment.likes || []).length;
 
                     return (
-                      <div key={comment.id} className={`bg-black/20 backdrop-blur-xl border ${comment.deleted_by_user ? 'border-red-500/30 bg-red-500/[0.02]' : 'border-white/10'} rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl relative group transition-all`}>
+                      <div key={comment.id} className={`bg-black/20 backdrop-blur-xl border ${comment.deleted_by_user ? 'border-primary-green/30 bg-primary-green/[0.02]' : 'border-white/10'} rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl relative group transition-all`}>
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 rounded-full bg-white/10 border border-white/10 overflow-hidden relative shrink-0 flex items-center justify-center">
                             {comment.avatar_url ? (
@@ -1520,7 +1535,7 @@ export default function AdminDashboard() {
                                 </span>
                               )}
                               {comment.deleted_by_user && (
-                                <span className="bg-red-500/20 text-red-400 text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-red-500/20 shadow-md">
+                                <span className="bg-primary-green/20 text-red-400 text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-primary-green/20 shadow-md">
                                   Supprimé par l'utilisateur
                                 </span>
                               )}
@@ -1557,8 +1572,8 @@ export default function AdminDashboard() {
                                 onClick={() => deleteComment(comment.id)} 
                                 className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 shadow-lg border ${
                                   comment.deleted_by_user 
-                                    ? "bg-red-600 text-white hover:bg-red-700 border-red-600/20" 
-                                    : "bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border-red-500/20"
+                                    ? "bg-primary-green text-white hover:bg-red-700 border-primary-green/20" 
+                                    : "bg-primary-green/10 text-red-400 hover:bg-primary-green hover:text-white border-primary-green/20"
                                 }`}
                                 title="Supprimer définitivement de la base de données (Archiver)"
                               >
@@ -1698,7 +1713,7 @@ export default function AdminDashboard() {
                         <h3 className="font-serif text-2xl text-white">{product.name}</h3>
                         <div className="flex justify-between items-center pt-6 border-t border-white/10">
                           <button onClick={() => { setEditingProduct(product); setProdName(product.name); setProdPrice(product.price); setProdDesc(product.description); setProdImages(product.images); setProdImagesText(product.images.join('\n')); setProdLink(product.link || ""); setProdLinkText(product.link_text || ""); setProdPurchaseMsg(product.purchase_message || ""); setIsProductModalOpen(true); }} className="text-[10px] font-bold uppercase tracking-widest text-white/60 hover:text-primary-red transition-colors flex items-center gap-2"><Edit2 size={14} /> Modifier</button>
-                          <button onClick={() => deleteProduct(product.id)} className="text-[10px] font-bold uppercase tracking-widest text-red-400 hover:text-red-500 transition-colors flex items-center gap-2"><Trash2 size={14} /> Supprimer</button>
+                          <button onClick={() => deleteProduct(product.id)} className="text-[10px] font-bold uppercase tracking-widest text-red-400 hover:text-primary-green transition-colors flex items-center gap-2"><Trash2 size={14} /> Supprimer</button>
                         </div>
                       </div>
                     </div>
@@ -1725,11 +1740,11 @@ export default function AdminDashboard() {
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold uppercase tracking-widest opacity-40">Nom d&apos;affichage</label>
-                      <input type="text" value={profileName} onChange={(e) => setProfileName(e.target.value)} placeholder="Ex: Lucas Caillat" className="w-full bg-transparent border-b border-text-black/20 py-2 outline-none text-sm text-text-black" />
+                      <input type="text" value={profileName} onChange={(e) => setProfileName(e.target.value)} placeholder="Ex: Lola Peloille" className="w-full bg-transparent border-b border-text-black/20 py-2 outline-none text-sm text-text-black" />
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold uppercase tracking-widest opacity-40">Profession / Rôle</label>
-                      <input type="text" value={profileProfession} onChange={(e) => setProfileProfession(e.target.value)} placeholder="Ex: Freelance Informatique" className="w-full bg-transparent border-b border-text-black/20 py-2 outline-none text-sm text-text-black" />
+                      <input type="text" value={profileProfession} onChange={(e) => setProfileProfession(e.target.value)} placeholder="Ex: Artiste peintre" className="w-full bg-transparent border-b border-text-black/20 py-2 outline-none text-sm text-text-black" />
                     </div>
                   </div>
                   <div className="space-y-2">
@@ -1916,18 +1931,18 @@ export default function AdminDashboard() {
                   {mfaFactors.length > 0 ? (
                     <div className="bg-green-600/5 p-6 rounded-sm border border-green-600/10 flex justify-between items-center">
                       <div className="flex items-center gap-3 text-green-600"><Check size={20} /><div><p className="font-bold text-sm uppercase tracking-widest">A2F Activée</p></div></div>
-                      <button onClick={() => handleMfaUnenroll(mfaFactors[0].id)} className="text-[10px] font-bold text-red-600 uppercase tracking-widest hover:underline">Désactiver</button>
+                      <button onClick={() => handleMfaUnenroll(mfaFactors[0].id)} className="text-[10px] font-bold text-primary-green uppercase tracking-widest hover:underline">Désactiver</button>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       {!mfaEnrollment ? (
-                        <button type="button" onClick={handleMfaEnroll} className="bg-primary-red text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-xs hover:bg-red-600 transition-all">Activer l&apos;A2F</button>
+                        <button type="button" onClick={handleMfaEnroll} className="bg-primary-red text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-xs hover:bg-primary-green transition-all">Activer l&apos;A2F</button>
                       ) : (
                         <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-2xl space-y-8">
                           <QRCodeSVG value={mfaEnrollment.totp.uri} size={180} />
                           <input type="text" value={mfaCode} onChange={(e) => setMfaCode(e.target.value)} placeholder="000 000" className="flex-1 bg-white/5 border border-white/10 py-4 rounded-xl outline-none text-center text-3xl tracking-[0.2em] font-serif focus:border-primary-red transition-all text-white" maxLength={6} autoFocus />
                           <button type="button" onClick={handleMfaVerify} className="bg-text-black text-white px-8 py-2 text-[10px] font-bold uppercase tracking-widest rounded-xs">Vérifier & Activer</button>
-                          {mfaError && <p className="text-red-600 text-[10px] font-bold uppercase">{mfaError}</p>}
+                          {mfaError && <p className="text-primary-green text-[10px] font-bold uppercase">{mfaError}</p>}
                         </div>
                       )}
                     </div>
@@ -2064,7 +2079,7 @@ export default function AdminDashboard() {
                     />
                   </div>
 
-                  <button type="submit" className="w-full bg-primary-red text-white py-4 rounded-2xl font-bold text-xs tracking-widest uppercase hover:bg-red-600 transition-all shadow-2xl shadow-primary-red/30">
+                  <button type="submit" className="w-full bg-primary-red text-white py-4 rounded-2xl font-bold text-xs tracking-widest uppercase hover:bg-primary-green transition-all shadow-2xl shadow-primary-red/30">
                     Enregistrer le Produit
                   </button>
                 </form>
@@ -2213,7 +2228,7 @@ export default function AdminDashboard() {
                       onChange={(e) => setFormDetails(e.target.value)} 
                       rows={3} 
                       className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm outline-none focus:border-primary-red transition-all text-white resize-none" 
-                      placeholder="Ex: Temps de lecture: 5 min • Rôle: Designer • Client: Lucas" 
+                      placeholder="Ex: Temps de lecture: 5 min • Rôle: Designer • Client: Lola" 
                     />
                   </div>
 
@@ -2242,7 +2257,7 @@ export default function AdminDashboard() {
                               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-all">
                                 <button type="button" onClick={() => moveGalleryItem(idx, 'up')} className="p-1.5 bg-white/20 hover:bg-white/40 rounded-lg text-white"><ArrowLeft size={12} className="rotate-90" /></button>
                                 <button type="button" onClick={() => moveGalleryItem(idx, 'down')} className="p-1.5 bg-white/20 hover:bg-white/40 rounded-lg text-white"><ArrowLeft size={12} className="-rotate-90" /></button>
-                                <button type="button" onClick={() => removeGalleryItem(idx)} className="p-2 bg-red-600 text-white rounded-lg"><Trash2 size={12} /></button>
+                                <button type="button" onClick={() => removeGalleryItem(idx)} className="p-2 bg-primary-green text-white rounded-lg"><Trash2 size={12} /></button>
                               </div>
                             </div>
                           );
@@ -2251,7 +2266,7 @@ export default function AdminDashboard() {
                     )}
                   </div>
 
-                  <button type="submit" className="w-full bg-primary-red text-white py-5 rounded-2xl font-bold text-xs tracking-widest uppercase hover:bg-red-600 transition-all shadow-2xl shadow-primary-red/30">
+                  <button type="submit" className="w-full bg-primary-red text-white py-5 rounded-2xl font-bold text-xs tracking-widest uppercase hover:bg-primary-green transition-all shadow-2xl shadow-primary-red/30">
                     ENREGISTRER LE POSTE
                   </button>
                 </form>

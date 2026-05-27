@@ -4,10 +4,10 @@
 
 :root {
   --background: #d3d3d3;
-  --primary-red: #ff3131;
+  --primary-red: #606c38;
   --text-black: #111111;
   --soft-black: #1c1c1c;
-  --shadow-red: rgba(255, 49, 49, 0.18);
+  --shadow-primary-green: rgba(255, 49, 49, 0.18);
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);
 }

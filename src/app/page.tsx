@@ -104,20 +104,20 @@ const getYoutubeId = (url: string) => {
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
   const [settings, setSettings] = useState({ 
-    profession: "Freelance informatique", 
+    profession: "Artiste peintre", 
     bio: "", 
     email: "", 
     projectsTitle: "Sélection 2024", 
     recentProjectsTitle: "Projets Récents",
     galleryTitle: "Galerie", 
     bentoGridTitle: "Bento Grid",
-    heroTitleMain: "CAILLAT", 
-    heroTitleSub: "Lucas", 
+    heroTitleMain: "PELOILLE", 
+    heroTitleSub: "Lola", 
     textEffectImage: "",
     musicEnabled: false, 
     musicUrl: "", 
     musicCover: "",
-    primaryColor: "#ff3131",
+    primaryColor: "#606c38",
     show3DBackground: false,
     musicRotationEnabled: true,
     statueTextureUrl: "",
@@ -198,12 +198,12 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
 
   // Color transition - Adjusted for portrait
-  const pColor = settings.primaryColor || "#ff3131";
+  const pColor = settings.primaryColor || "#606c38";
   const backgroundColor = useTransform(scrollYProgress, [0, 0.15], [pColor, "#ffffff"]);
   const textColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", pColor]);
   const secondaryTextColor = useTransform(scrollYProgress, [0, 0.15], ["rgba(255,255,255,0.7)", "rgba(17,17,17,0.6)"]);
   const adminBtnColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", "#111111"]);
-  const lucasColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", pColor]);
+  const lolaColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", pColor]);
 
   // Text Effect Image & Background Texture
   const hasTextImg = settings.textEffectImage && settings.textEffectImage.length > 0;
@@ -385,7 +385,7 @@ export default function Home() {
           ...prev, 
           ...global,
           bio: global.profileBio ?? global.bio ?? "",
-          profession: global.profileProfession ?? global.profession ?? "Freelance informatique"
+          profession: global.profileProfession ?? global.profession ?? "Artiste peintre"
         }));
       }
       
@@ -849,7 +849,7 @@ export default function Home() {
     reader.readAsDataURL(file);
   };
 
-  const copyEmail = () => { navigator.clipboard.writeText(settings.email || "contact@lucascaillat.fr"); setCopied(true); setTimeout(() => setCopied(false), 2000); };
+  const copyEmail = () => { navigator.clipboard.writeText(settings.email || "lolapeloille@gmail.com"); setCopied(true); setTimeout(() => setCopied(false), 2000); };
 
   const getYoutubeThumbnail = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
   const formatTime = (secs: number) => {
@@ -1042,7 +1042,12 @@ export default function Home() {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('admin_auth');
+    }
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {}
     setUser(null);
   };
 
@@ -1122,8 +1127,8 @@ export default function Home() {
         :root {
           --primary-red: ${pColor};
           --color-primary-red: ${pColor};
-          --shadow-red: ${pColor}22;
-          --color-shadow-red: ${pColor}22;
+          --shadow-primary-green: ${pColor}22;
+          --color-shadow-primary-green: ${pColor}22;
         }
       `}</style>
 
@@ -1224,9 +1229,9 @@ export default function Home() {
                   </div>
                 </div>
 
-                {authError && <p className="text-red-500 text-[10px] font-bold uppercase text-center tracking-widest">{authError}</p>}
+                {authError && <p className="text-primary-green text-[10px] font-bold uppercase text-center tracking-widest">{authError}</p>}
 
-                <button type="submit" disabled={isAuthLoading} className="w-full bg-primary-red text-white py-5 rounded-2xl font-bold text-xs tracking-widest uppercase hover:bg-red-600 transition-all shadow-2xl shadow-primary-red/30 flex items-center justify-center gap-3">
+                <button type="submit" disabled={isAuthLoading} className="w-full bg-primary-red text-white py-5 rounded-2xl font-bold text-xs tracking-widest uppercase hover:bg-primary-green transition-all shadow-2xl shadow-primary-red/30 flex items-center justify-center gap-3">
                   {isAuthLoading ? "Chargement..." : (isSignUp ? "S'INSCRIRE" : "SE CONNECTER")}
                 </button>
 
@@ -1395,7 +1400,7 @@ export default function Home() {
                     <div className="space-y-4 mb-4">
                       {r.replies && r.replies.length > 0 ? (
                         r.replies.map((rep: { text: string; date: string; from: string; media?: { url: string; type: string }[] }, idx: number) => (
-                          <div key={idx} className={`${rep.from === 'Lucas' ? 'bg-white/5 border-l-2 border-primary-red pl-4 py-2 rounded-r-lg' : ''} space-y-3`}>
+                          <div key={idx} className={`${rep.from === 'Lola' ? 'bg-white/5 border-l-2 border-primary-red pl-4 py-2 rounded-r-lg' : ''} space-y-3`}>
                             <div>
                               <p className="text-[9px] font-bold uppercase text-white/30 mb-1">{rep.from} • {rep.date}</p>
                               <p className="text-sm font-medium text-white/90">{rep.text}</p>
@@ -1419,7 +1424,7 @@ export default function Home() {
                       )}
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-[9px] opacity-30 italic">{r.reply ? "Répondu par Lucas" : "Envoyé par vous"}</p>
+                      <p className="text-[9px] opacity-30 italic">{r.reply ? "Répondu par Lola" : "Envoyé par vous"}</p>
                       {r.reply && (
                         <button 
                           onClick={() => handleReplyToMessage(r)}
@@ -1501,7 +1506,7 @@ export default function Home() {
                     
                     <div className="flex items-center justify-between pt-1">
                       <span className="text-[8px] font-bold uppercase tracking-widest text-white/30">Ou local</span>
-                      <label className="cursor-pointer text-[10px] font-bold text-primary-red uppercase tracking-widest flex items-center gap-1.5 hover:text-red-400 transition-colors">
+                      <label className="cursor-pointer text-[10px] font-bold text-primary-red uppercase tracking-widest flex items-center gap-1.5 hover:text-primary-green-400 transition-colors">
                         <Upload size={12} /> Importer un fichier
                         <input type="file" className="hidden" accept="image/*" onChange={handleProfileImageUpload} />
                       </label>
@@ -1511,7 +1516,7 @@ export default function Home() {
                   {/* Owner site settings (Bio & Profession) */}
                   {user.email === 'caillatlucas2304@gmail.com' && (
                     <div className="space-y-4 pt-4 border-t border-white/5">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-primary-red">Paramètres du Site (Lucas)</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-primary-red">Paramètres du Site (Lola)</p>
                       
                       <div className="space-y-2">
                         <p className="text-[9px] font-bold uppercase tracking-widest text-white/30">Profession / Rôle</p>
@@ -1576,7 +1581,7 @@ export default function Home() {
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-20 h-20 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto"><CheckCircle2 size={40} /></motion.div>
                   <div className="space-y-2">
                     <h3 className="font-serif text-3xl italic">Message envoyé !</h3>
-                    <p className="text-xs opacity-50">Lucas vous répondra bientôt.</p>
+                    <p className="text-xs opacity-50">Lola vous répondra bientôt.</p>
                   </div>
                   {formOrderId && (
                     <div className="bg-primary-red/5 p-6 rounded-sm border border-primary-red/20 space-y-3">
@@ -1612,7 +1617,7 @@ export default function Home() {
                         {formAttachments.map((img, i) => (
                           <div key={i} className="relative w-12 h-12 rounded-xs overflow-hidden border border-text-black/10 flex-shrink-0 group">
                             <Image src={img} alt="attachment" fill className="object-cover" unoptimized />
-                            <button type="button" onClick={() => setFormAttachments(formAttachments.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-red-600/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white"><X size={12} /></button>
+                            <button type="button" onClick={() => setFormAttachments(formAttachments.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-primary-green/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white"><X size={12} /></button>
                           </div>
                         ))}
                       </div>
@@ -1630,7 +1635,7 @@ export default function Home() {
                         required 
                       />
                       <label htmlFor="orderAgree" className="text-[11px] leading-relaxed opacity-70 cursor-pointer">
-                        Je m'engage à régler le montant de ce produit ({selectedProduct ? `${selectedProduct.price}€` : "indiqué"}) une fois la commande validée par Lucas. <span className="text-primary-red font-bold">*</span>
+                        Je m'engage à régler le montant de ce produit ({selectedProduct ? `${selectedProduct.price}€` : "indiqué"}) une fois la commande validée par Lola. <span className="text-primary-red font-bold">*</span>
                       </label>
                     </div>
                   )}
@@ -1688,8 +1693,8 @@ export default function Home() {
                     <h4 className="text-sm font-bold text-white truncate font-sans" title={songTitle || settings.heroTitleMain || "BENTO TRACK"}>
                       {songTitle || settings.heroTitleMain || "BENTO TRACK"}
                     </h4>
-                    <p className="text-xs text-white/50 truncate font-sans" title={songArtist || settings.heroTitleSub || "Lucas Caillat"}>
-                      {songArtist || settings.heroTitleSub || "Lucas Caillat"}
+                    <p className="text-xs text-white/50 truncate font-sans" title={songArtist || settings.heroTitleSub || "Lola Peloille"}>
+                      {songArtist || settings.heroTitleSub || "Lola Peloille"}
                     </p>
                   </div>
                 </div>
@@ -1828,7 +1833,7 @@ export default function Home() {
           <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }} className="absolute -top-12 md:-top-32 left-[10%] md:left-[15%] z-20 pointer-events-none">
             <motion.h2 
               style={{ 
-                color: hasTextImg ? textFinalColor : lucasColor,
+                color: hasTextImg ? textFinalColor : lolaColor,
                 backgroundImage: textBgImage,
                 WebkitBackgroundClip: textBgClip as any,
                 backgroundClip: textBgClip as any,
@@ -2082,7 +2087,7 @@ export default function Home() {
                           {commentImgMode === 'upload' ? (
                             <div className="flex justify-between items-center bg-white/5 p-3 rounded-2xl border border-white/5">
                               <span className="text-[10px] text-white/40">Fichier local</span>
-                              <label className="cursor-pointer text-[10px] font-bold text-primary-red uppercase tracking-widest flex items-center gap-1.5 hover:text-red-400 transition-colors">
+                              <label className="cursor-pointer text-[10px] font-bold text-primary-red uppercase tracking-widest flex items-center gap-1.5 hover:text-primary-green-400 transition-colors">
                                 <Upload size={12} /> Choisir une image
                                 <input type="file" className="hidden" accept="image/*" onChange={handleCommentImageUpload} />
                               </label>
@@ -2103,7 +2108,7 @@ export default function Home() {
                               <button
                                 type="button"
                                 onClick={() => setCommentImageUrl("")}
-                                className="absolute inset-0 bg-red-600/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white"
+                                className="absolute inset-0 bg-primary-green/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white"
                               >
                                 <X size={16} />
                               </button>
@@ -2129,7 +2134,7 @@ export default function Home() {
                         </p>
                         <button
                           onClick={() => { setIsSignUp(false); setIsAuthModalOpen(true); }}
-                          className="w-full bg-primary-red hover:bg-red-600 text-white font-bold uppercase tracking-widest text-[10px] py-3.5 rounded-2xl transition-all shadow-lg"
+                          className="w-full bg-primary-red hover:bg-primary-green text-white font-bold uppercase tracking-widest text-[10px] py-3.5 rounded-2xl transition-all shadow-lg"
                         >
                           SE CONNECTER
                         </button>
@@ -2205,7 +2210,7 @@ export default function Home() {
                                   {canDelete && !isDeleted && (
                                     <button
                                       onClick={() => handleCommentDelete(comment.id)}
-                                      className="p-2 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 rounded-full transition-all opacity-0 group-hover:opacity-100"
+                                      className="p-2 bg-white/5 hover:bg-primary-green/20 text-white/40 hover:text-primary-green rounded-full transition-all opacity-0 group-hover:opacity-100"
                                       title="Supprimer ce commentaire"
                                     >
                                       <Trash2 size={12} />
@@ -2308,7 +2313,7 @@ export default function Home() {
 
                                     <div className="flex-1 min-w-[120px]">
                                       {replyImgMode === 'upload' ? (
-                                        <label className="cursor-pointer text-[9px] font-bold text-primary-red uppercase tracking-widest flex items-center gap-1 hover:text-red-400 justify-end">
+                                        <label className="cursor-pointer text-[9px] font-bold text-primary-red uppercase tracking-widest flex items-center gap-1 hover:text-primary-green-400 justify-end">
                                           <Upload size={10} /> Choisir...
                                           <input type="file" className="hidden" accept="image/*" onChange={handleReplyImageUpload} />
                                         </label>
@@ -2330,7 +2335,7 @@ export default function Home() {
                                       <button
                                         type="button"
                                         onClick={() => setReplyImageUrl("")}
-                                        className="absolute inset-0 bg-red-600/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white"
+                                        className="absolute inset-0 bg-primary-green/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white"
                                       >
                                         <X size={12} />
                                       </button>
@@ -2347,7 +2352,7 @@ export default function Home() {
                                     </button>
                                     <button
                                       type="submit"
-                                      className="px-3.5 py-2 bg-primary-red hover:bg-red-600 text-white rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all"
+                                      className="px-3.5 py-2 bg-primary-red hover:bg-primary-green text-white rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all"
                                     >
                                       Répondre
                                     </button>
@@ -2401,7 +2406,7 @@ export default function Home() {
                                           {canDeleteReply && (
                                             <button
                                               onClick={() => handleCommentDelete(reply.id)}
-                                              className="p-1.5 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 rounded-full transition-all opacity-0 group-hover:opacity-100"
+                                              className="p-1.5 bg-white/5 hover:bg-primary-green/20 text-white/40 hover:text-primary-green rounded-full transition-all opacity-0 group-hover:opacity-100"
                                               title="Supprimer ce commentaire"
                                             >
                                               <Trash2 size={10} />
@@ -2475,7 +2480,7 @@ export default function Home() {
                 <div className="aspect-square bg-black/20 backdrop-blur-md border border-white/20 rounded-2xl p-10 flex flex-col justify-between text-white relative overflow-hidden group shadow-2xl hover:bg-black/30 transition-all">
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Contact</p>
                   <div className="space-y-4 relative z-10">
-                    <p className="font-serif text-2xl truncate">{settings.email || "hello@lucascaillat.fr"}</p>
+                    <p className="font-serif text-2xl truncate">{settings.email || "lolapeloille@gmail.com"}</p>
                     <button onClick={copyEmail} className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary-red transition-colors"> {copied ? <><Check size={14} /> Copié</> : <><Copy size={14} /> Copier l'email</>} </button>
                   </div>
                 </div>
@@ -2490,7 +2495,7 @@ export default function Home() {
           <div className="max-w-md text-center md:text-left relative">
             <motion.h3 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="font-serif text-3xl md:text-4xl text-soft-black mb-6">Discutons de votre projet.</motion.h3>
             <div className="relative inline-block">
-              <button onClick={copyEmail} className="group flex items-center gap-3 text-lg md:text-xl border-b border-primary-red text-text-black hover:text-primary-red transition-all pb-1 font-medium"> {settings.email || "contact@lucascaillat.fr"} <Copy size={16} className="opacity-0 group-hover:opacity-40 transition-opacity" /> </button>
+              <button onClick={copyEmail} className="group flex items-center gap-3 text-lg md:text-xl border-b border-primary-red text-text-black hover:text-primary-red transition-all pb-1 font-medium"> {settings.email || "lolapeloille@gmail.com"} <Copy size={16} className="opacity-0 group-hover:opacity-40 transition-opacity" /> </button>
               <AnimatePresence> {copied && <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: -10 }} exit={{ opacity: 0, y: 0 }} className="absolute -top-12 left-0 bg-text-black text-white px-4 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 shadow-xl"><Check size={12} className="text-green-500" /> Email Copié !</motion.div>} </AnimatePresence>
             </div>
           </div>

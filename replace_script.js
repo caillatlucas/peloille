@@ -14,25 +14,25 @@ function walkDir(dir) {
                 let content = fs.readFileSync(dirPath, 'utf8');
                 let initial = content;
                 
-                content = content.replaceAll("Lucas Caillat", "Lola Peloille");
-                content = content.replaceAll("lucas caillat", "Lola Peloille");
-                content = content.replaceAll("Lucas", "Lola");
-                content = content.replaceAll("lucas", "lola");
-                content = content.replaceAll("CAILLAT", "PELOILLE");
-                content = content.replaceAll("caillat", "peloille");
-                content = content.replaceAll("Freelance Informatique", "Artiste peintre");
-                content = content.replaceAll("Freelance informatique", "Artiste peintre");
-                content = content.replaceAll("contact@lolapeloille.fr", "lolapeloille@gmail.com");
-                content = content.replaceAll("hello@lolapeloille.fr", "lolapeloille@gmail.com");
-                content = content.replaceAll("#ff3131", "#606c38");
-                content = content.replaceAll("red-600", "primary-green");
-                content = content.replaceAll("red-500", "primary-green");
-                content = content.replaceAll("shadow-red", "shadow-primary-green");
-                content = content.replaceAll("hover:text-red", "hover:text-primary-green");
+                content = content.replaceAll("Lola Peloille", "Lola Peloille");
+                content = content.replaceAll("Lola Peloille", "Lola Peloille");
+                content = content.replaceAll("Lola", "Lola");
+                content = content.replaceAll("lola", "lola");
+                content = content.replaceAll("PELOILLE", "PELOILLE");
+                content = content.replaceAll("peloille", "peloille");
+                content = content.replaceAll("Artiste peintre", "Artiste peintre");
+                content = content.replaceAll("Artiste peintre", "Artiste peintre");
+                content = content.replaceAll("lolapeloille@gmail.com", "lolapeloille@gmail.com");
+                content = content.replaceAll("lolapeloille@gmail.com", "lolapeloille@gmail.com");
+                content = content.replaceAll("#606c38", "#606c38");
+                content = content.replaceAll("primary-green", "primary-green");
+                content = content.replaceAll("primary-green", "primary-green");
+                content = content.replaceAll("shadow-primary-green", "shadow-primary-green");
+                content = content.replaceAll("hover:text-primary-green", "hover:text-primary-green");
                 
                 // Fix the email issue for login
-                content = content.replaceAll("peloillelola2304@gmail.com", "caillatlucas2304@gmail.com");
-                content = content.replaceAll("lolapeloille2304@gmail.com", "caillatlucas2304@gmail.com");
+                content = content.replaceAll("caillatlucas2304@gmail.com", "caillatlucas2304@gmail.com");
+                content = content.replaceAll("caillatlucas2304@gmail.com", "caillatlucas2304@gmail.com");
 
                 if (content !== initial) {
                     fs.writeFileSync(dirPath, content, 'utf8');
