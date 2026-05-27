@@ -48,3 +48,5 @@ Ce projet est **100% prêt** pour un déploiement sur GitHub Pages via GitHub Ac
 - `src/components/Projects.tsx` : Galerie des projets.
 - `src/components/Socials.tsx` : Liens réseaux sociaux.
 - `.github/workflows/deploy.yml` : Workflow pour le déploiement.
+
+<!-- Push trigger -->
