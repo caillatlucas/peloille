@@ -110,7 +110,7 @@ function Statue({ color, textureUrl, modelUrl, useOriginalMaterial }: { color: s
         })
       : new THREE.MeshToonMaterial({
           color: color,
-          emissive: isWhite ? '#ff0000' : color, // Red glow when white
+          emissive: isWhite ? '#606c38' : color, // Sage green glow when white
           emissiveIntensity: isWhite ? 0.3 : 0.1,
         });
 
@@ -151,7 +151,7 @@ function Statue({ color, textureUrl, modelUrl, useOriginalMaterial }: { color: s
         scale={2.8} 
         position={[0, -1.2, 0]} 
       />
-      {/* Dynamic Red Shadow when white */}
+      {/* Dynamic Shadow when white */}
       {isWhite && (
         <ContactShadows 
           position={[0, -1.2, 0]} 
@@ -159,7 +159,7 @@ function Statue({ color, textureUrl, modelUrl, useOriginalMaterial }: { color: s
           scale={10} 
           blur={2.5} 
           far={4} 
-          color="#ff0000" 
+          color="#606c38" 
         />
       )}
     </group>
@@ -198,7 +198,7 @@ export default function StatueBackground({ color, textureUrl, modelUrl, useOrigi
         style={{
           backgroundImage: `radial-gradient(circle, currentColor 1.5px, transparent 1.5px)`,
           backgroundSize: '6px 6px',
-          color: isWhite ? '#ff0000' : color, // Dots turn red when white to match the shadow request
+          color: isWhite ? '#606c38' : color, // Dots turn sage green when white
           maskImage: 'radial-gradient(ellipse at center, black, transparent 90%)',
           WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 90%)',
         }}

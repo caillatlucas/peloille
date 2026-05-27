@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   title: "PELOILLE.",
   description: "Portfolio de Lola Peloille - Artiste peintre",
   icons: {
-    icon: "/peloille/favicon.png",
-    shortcut: "/peloille/favicon.ico",
+    icon: "/peloille/favicon.svg",
+    shortcut: "/peloille/favicon.svg",
   },
 };
 
@@ -32,8 +32,8 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/peloille/favicon.png?v=2" />
-        <link rel="shortcut icon" href="/peloille/favicon.ico?v=2" />
+        <link rel="icon" type="image/svg+xml" href="/peloille/favicon.svg?v=3" />
+        <link rel="shortcut icon" href="/peloille/favicon.svg?v=3" />
         <link rel="manifest" href="/peloille/manifest.json" />
         <meta name="theme-color" content="#0d0d0d" />
         <link rel="apple-touch-icon" href="/peloille/icon-192x192.png" />
