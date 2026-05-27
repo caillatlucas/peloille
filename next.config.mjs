@@ -1,3 +1,4 @@
+// Configuration Next.js - Modifié pour déclencher un push
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",

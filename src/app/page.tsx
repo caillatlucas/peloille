@@ -118,7 +118,7 @@ export default function Home() {
     musicUrl: "", 
     musicCover: "",
     primaryColor: "#606c38",
-    show3DBackground: false,
+    show3DBackground: true,
     musicRotationEnabled: true,
     statueTextureUrl: "",
     statueModelUrl: "",
@@ -347,71 +347,74 @@ export default function Home() {
   };
 
   const fetchData = async () => {
-    fetchComments();
-    const { data: sData } = await supabase.from('settings').select('*');
-    if (sData) {
-      const global = sData.find(s => s.key === 'global')?.value;
-      const soc = sData.find(s => s.key === 'socials')?.value;
-      
-      if (global) {
-        setOwnerImage(global.profileImage || "");
-        if (global.sectionsConfig) {
-          const hasComments = global.sectionsConfig.some((s: any) => s.id === 'comments');
-          let migrated = global.sectionsConfig.map((s: { id: string; label: string; subLabel?: string; visible: boolean }) => {
-            if (s.id === 'projects' && s.subLabel === undefined) return { ...s, subLabel: global.projectsTitle || "Sélection 2024", label: global.recentProjectsTitle || "Postes" };
-            if (s.id === 'gallery' && s.subLabel === undefined) return { ...s, subLabel: "Galerie Photo/Vidéo", label: global.galleryTitle || s.label };
-            if (s.id === 'shop' && s.subLabel === undefined) return { ...s, subLabel: "Nos Produits" };
-            if (s.id === 'comments' && s.subLabel === undefined) return { ...s, subLabel: "Vos Retours" };
-            if (s.id === 'bento' && s.subLabel === undefined) return { ...s, subLabel: "Bento Grid", label: global.bentoGridTitle || s.label };
-            if (s.id === 'projects' && s.label === 'Projets') return { ...s, label: 'Postes' };
-            return s;
-          });
-          if (!hasComments) {
-            migrated.push({ id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true });
+    try {
+      fetchComments();
+      const { data: sData } = await supabase.from('settings').select('*');
+      if (sData) {
+        const global = sData.find(s => s.key === 'global')?.value;
+        const soc = sData.find(s => s.key === 'socials')?.value;
+        
+        if (global) {
+          setOwnerImage(global.profileImage || "");
+          if (global.sectionsConfig) {
+            const hasComments = global.sectionsConfig.some((s: any) => s.id === 'comments');
+            let migrated = global.sectionsConfig.map((s: { id: string; label: string; subLabel?: string; visible: boolean }) => {
+              if (s.id === 'projects' && s.subLabel === undefined) return { ...s, subLabel: global.projectsTitle || "Sélection 2024", label: global.recentProjectsTitle || "Postes" };
+              if (s.id === 'gallery' && s.subLabel === undefined) return { ...s, subLabel: "Galerie Photo/Vidéo", label: global.galleryTitle || s.label };
+              if (s.id === 'shop' && s.subLabel === undefined) return { ...s, subLabel: "Nos Produits" };
+              if (s.id === 'comments' && s.subLabel === undefined) return { ...s, subLabel: "Vos Retours" };
+              if (s.id === 'bento' && s.subLabel === undefined) return { ...s, subLabel: "Bento Grid", label: global.bentoGridTitle || s.label };
+              if (s.id === 'projects' && s.label === 'Projets') return { ...s, label: 'Postes' };
+              return s;
+            });
+            if (!hasComments) {
+              migrated.push({ id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true });
+            }
+            global.sectionsConfig = migrated;
+          } else {
+            global.sectionsConfig = [
+              { id: 'projects', label: 'Postes', subLabel: global.projectsTitle || 'Sélection 2024', visible: true },
+              { id: 'shop', label: 'Boutique', subLabel: 'Nos Produits', visible: true },
+              { id: 'gallery', label: 'Galerie', subLabel: 'Galerie Photo/Vidéo', visible: true },
+              { id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true },
+              { id: 'bento', label: 'À propos', subLabel: 'Bento Grid', visible: true }
+            ];
           }
-          global.sectionsConfig = migrated;
-        } else {
-          global.sectionsConfig = [
-            { id: 'projects', label: 'Postes', subLabel: global.projectsTitle || 'Sélection 2024', visible: true },
-            { id: 'shop', label: 'Boutique', subLabel: 'Nos Produits', visible: true },
-            { id: 'gallery', label: 'Galerie', subLabel: 'Galerie Photo/Vidéo', visible: true },
-            { id: 'comments', label: 'Commentaires', subLabel: 'Vos Retours', visible: true },
-            { id: 'bento', label: 'À propos', subLabel: 'Bento Grid', visible: true }
-          ];
+          setOwnerImage(global.profileImage || "");
+          setShow3DBackground(global.show3DBackground ?? true);
+          setSettings(prev => ({ 
+            ...prev, 
+            ...global,
+            bio: global.profileBio ?? global.bio ?? "",
+            profession: global.profileProfession ?? global.profession ?? "Artiste peintre"
+          }));
         }
-        setOwnerImage(global.profileImage || "");
-        setShow3DBackground(global.show3DBackground ?? false);
-        setSettings(prev => ({ 
-          ...prev, 
-          ...global,
-          bio: global.profileBio ?? global.bio ?? "",
-          profession: global.profileProfession ?? global.profession ?? "Artiste peintre"
-        }));
+        
+        if (soc) {
+          setSocialsConfig(soc);
+          setSettings(prev => ({ ...prev, email: soc.email }));
+        }
       }
-      
-      if (soc) {
-        setSocialsConfig(soc);
-        setSettings(prev => ({ ...prev, email: soc.email }));
+      const { data: mData } = await supabase.from('media').select('*');
+      if (mData) {
+        const global = (await supabase.from('settings').select('*').eq('key', 'global').single()).data?.value;
+        if (global?.mediaOrder) {
+          mData.sort((a, b) => {
+            const idxA = global.mediaOrder.indexOf(a.id);
+            const idxB = global.mediaOrder.indexOf(b.id);
+            if (idxA === -1 && idxB === -1) return 0;
+            if (idxA === -1) return 1;
+            if (idxB === -1) return -1;
+            return idxA - idxB;
+          });
+        }
+        setGalleryMedia(mData);
       }
+      const { data: pData } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+      if (pData) setProducts(pData);
+    } catch (e) {
+      console.warn("Fetch data public page bypass:", e);
     }
-    const { data: mData } = await supabase.from('media').select('*');
-    if (mData) {
-      const global = (await supabase.from('settings').select('*').eq('key', 'global').single()).data?.value;
-      if (global?.mediaOrder) {
-        mData.sort((a, b) => {
-          const idxA = global.mediaOrder.indexOf(a.id);
-          const idxB = global.mediaOrder.indexOf(b.id);
-          if (idxA === -1 && idxB === -1) return 0;
-          if (idxA === -1) return 1;
-          if (idxB === -1) return -1;
-          return idxA - idxB;
-        });
-      }
-      setGalleryMedia(mData);
-    }
-    const { data: pData } = await supabase.from('products').select('*').order('created_at', { ascending: false });
-    if (pData) setProducts(pData);
-
   };
 
   const fetchUserProfile = async (userId: string, email?: string) => {
