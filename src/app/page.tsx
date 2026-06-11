@@ -117,7 +117,7 @@ export default function Home() {
     musicEnabled: false, 
     musicUrl: "", 
     musicCover: "",
-    primaryColor: "#606c38",
+    primaryColor: "#4A5D23",
     show3DBackground: true,
     musicRotationEnabled: true,
     statueTextureUrl: "",
@@ -198,11 +198,11 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
 
   // Color transition - Adjusted for portrait
-  const pColor = settings.primaryColor || "#606c38";
-  const backgroundColor = useTransform(scrollYProgress, [0, 0.15], [pColor, "#ffffff"]);
+  const pColor = settings.primaryColor || "#4A5D23";
+  const backgroundColor = useTransform(scrollYProgress, [0, 0.15], [pColor, "#EAE8E3"]);
   const textColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", pColor]);
-  const secondaryTextColor = useTransform(scrollYProgress, [0, 0.15], ["rgba(255,255,255,0.7)", "rgba(17,17,17,0.6)"]);
-  const adminBtnColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", "#111111"]);
+  const secondaryTextColor = useTransform(scrollYProgress, [0, 0.15], ["rgba(255,255,255,0.7)", "rgba(26,26,26,0.6)"]);
+  const adminBtnColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", "#1A1A1A"]);
   const lolaColor = useTransform(scrollYProgress, [0, 0.15], ["#ffffff", pColor]);
 
   // Text Effect Image & Background Texture
@@ -1828,7 +1828,7 @@ export default function Home() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
               }} 
-              className="font-serif text-[20vw] md:text-[180px] lg:text-[220px] leading-[0.8] tracking-tighter select-none relative z-10"
+              className="font-serif italic font-light text-[22vw] md:text-[200px] lg:text-[250px] leading-[0.8] tracking-tight select-none relative z-10"
             >
               {settings.heroTitleMain}
             </motion.h1>
@@ -1844,17 +1844,17 @@ export default function Home() {
                 backgroundPosition: 'center',
                 textShadow
               }} 
-              className="font-serif italic text-5xl md:text-8xl lg:text-[140px] opacity-90 select-none"
+              className="font-serif font-medium text-4xl md:text-7xl lg:text-[120px] opacity-90 select-none tracking-widest uppercase"
             >
               {settings.heroTitleSub}
             </motion.h2>
           </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-12 md:mt-24 max-w-xl self-center md:self-start text-center md:text-left">
-          <motion.p style={{ color: textColor }} className="text-lg md:text-3xl font-light tracking-wide leading-relaxed mb-3 md:mb-4">{parseMarkdown(settings.profession)}</motion.p>
-          {settings.bio && <motion.p style={{ color: secondaryTextColor }} className="text-xs md:text-lg font-medium leading-relaxed max-w-md px-4 md:px-0">{parseMarkdown(settings.bio)}</motion.p>}
-          <motion.div style={{ backgroundColor: textColor }} className="h-[1px] w-12 mt-6 md:mt-8 opacity-30 mx-auto md:mx-0"></motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-16 md:mt-32 max-w-2xl self-center md:self-start text-center md:text-left">
+          <motion.p style={{ color: textColor }} className="text-xl md:text-4xl font-serif italic tracking-wide leading-relaxed mb-6 md:mb-8">{parseMarkdown(settings.profession)}</motion.p>
+          {settings.bio && <motion.p style={{ color: secondaryTextColor }} className="text-sm md:text-lg font-light leading-relaxed max-w-xl px-4 md:px-0 tracking-wide">{parseMarkdown(settings.bio)}</motion.p>}
+          <motion.div style={{ backgroundColor: textColor }} className="h-[1px] w-24 mt-8 md:mt-12 opacity-30 mx-auto md:mx-0"></motion.div>
         </motion.div>
       </section>
 
@@ -1966,9 +1966,9 @@ export default function Home() {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: i * 0.05 }} 
                             onClick={() => setSelectedImage(item)} 
-                            className={`relative overflow-hidden rounded-3xl bg-black/20 backdrop-blur-md border border-white/20 group cursor-zoom-in aspect-square md:aspect-auto shadow-2xl hover:bg-black/30 transition-all ${gridClass}`}
+                            className={`relative overflow-hidden rounded-xl bg-black/20 backdrop-blur-md border border-white/10 group cursor-zoom-in aspect-square md:aspect-auto shadow-xl hover:shadow-2xl hover:bg-black/40 transition-all duration-500 ${gridClass}`}
                           >
-                            <Image src={displayUrl} alt={item.name || ""} fill className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" unoptimized />
+                            <Image src={displayUrl} alt={item.name || ""} fill className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100" unoptimized />
                             
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             
@@ -1983,8 +1983,8 @@ export default function Home() {
                             {/* Card Details Overlay - Only display real names */}
                             {item.name && item.name !== "URL Image" && item.name !== "Vidéo YouTube" && (
                               <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                <div className="bg-white/10 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-xl max-w-[240px]">
-                                  <h3 className="text-white font-serif text-sm md:text-base leading-tight truncate">
+                                <div className="bg-black/60 backdrop-blur-xl border border-white/5 p-4 rounded-lg shadow-2xl max-w-[280px]">
+                                  <h3 className="text-white font-serif text-sm md:text-lg leading-tight truncate tracking-wide">
                                     {item.name}
                                   </h3>
                                 </div>

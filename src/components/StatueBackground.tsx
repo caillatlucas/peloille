@@ -110,7 +110,7 @@ function Statue({ color, textureUrl, modelUrl, useOriginalMaterial }: { color: s
         })
       : new THREE.MeshToonMaterial({
           color: color,
-          emissive: isWhite ? '#606c38' : color, // Sage green glow when white
+          emissive: isWhite ? '#4A5D23' : color, // Deep olive glow when white
           emissiveIntensity: isWhite ? 0.3 : 0.1,
         });
 
@@ -159,7 +159,7 @@ function Statue({ color, textureUrl, modelUrl, useOriginalMaterial }: { color: s
           scale={10} 
           blur={2.5} 
           far={4} 
-          color="#606c38" 
+          color="#4A5D23" 
         />
       )}
     </group>
@@ -177,9 +177,9 @@ export default function StatueBackground({ color, textureUrl, modelUrl, useOrigi
           camera={{ position: [0, 0, 5], fov: 45 }}
           style={{ pointerEvents: 'none' }}
         >
-          <AmbientLight intensity={0.8} />
-          <PointLight position={[10, 10, 10]} intensity={1} />
-          <DirectionalLight position={[-5, 5, 5]} intensity={1.5} />
+          <AmbientLight intensity={0.6} />
+          <PointLight position={[10, 15, 10]} intensity={1.2} />
+          <DirectionalLight position={[-5, 5, 5]} intensity={2.0} />
           <React.Suspense fallback={null}>
             <Statue 
               key={`${modelUrl || 'default'}-${useOriginalMaterial ? 'orig' : 'custom'}`} 
@@ -192,20 +192,20 @@ export default function StatueBackground({ color, textureUrl, modelUrl, useOrigi
         </Canvas>
       </div>
 
-      {/* Thicker Manga Dot (Halftone) Overlay */}
+      {/* Softer Halftone Overlay */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.25]" 
+        className="absolute inset-0 pointer-events-none opacity-[0.15]" 
         style={{
-          backgroundImage: `radial-gradient(circle, currentColor 1.5px, transparent 1.5px)`,
-          backgroundSize: '6px 6px',
-          color: isWhite ? '#606c38' : color, // Dots turn sage green when white
-          maskImage: 'radial-gradient(ellipse at center, black, transparent 90%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 90%)',
+          backgroundImage: `radial-gradient(circle, currentColor 1px, transparent 1px)`,
+          backgroundSize: '4px 4px',
+          color: isWhite ? '#4A5D23' : color, // Dots turn deep olive green when white
+          maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
         }}
       />
       
-      {/* Depth Shadow */}
-      <div className="absolute inset-0 shadow-[inner_0_0_150px_rgba(0,0,0,0.15)] pointer-events-none" />
+      {/* Deep Depth Shadow */}
+      <div className="absolute inset-0 shadow-[inner_0_0_200px_rgba(0,0,0,0.25)] pointer-events-none" />
     </div>
   );
 }

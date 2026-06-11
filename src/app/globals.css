@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #d3d3d3;
-  --primary-red: #606c38;
-  --text-black: #111111;
-  --soft-black: #1c1c1c;
-  --shadow-primary-green: rgba(255, 49, 49, 0.18);
+  --background: #EAE8E3;
+  --primary-red: #4A5D23;
+  --text-black: #1A1A1A;
+  --soft-black: #2A2A2A;
+  --shadow-primary-green: rgba(74, 93, 35, 0.18);
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);
 }
